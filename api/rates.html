@@ -1164,8 +1164,8 @@ window.onload = async () => {
 
   date.innerHTML = data.date;//`<span style="color:var(--bg3)">${yesterday.date} - </span>${data.date}`;
   
-  window.usd = data.prices.find(i=>i.slug=="usd").price;
-  window.usdt = data.prices.find(i=>i.slug=="usd").price;
+  window.usd = data.prices.find(i=>i.slug=="usd")?.price||0;
+  window.usdt = data.prices.find(i=>i.slug=="usd")?.price||0;
   window.data = data;
   render_list();
   new Sortable(list, {
