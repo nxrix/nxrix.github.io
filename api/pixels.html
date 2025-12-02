@@ -107,17 +107,14 @@ html , body {
   height: 16px;
   color: #fff;
   z-index: 3;
-  position: fixed;
-  top: calc(50vh - 8px);
-  left: calc(50vw - 8px);
   user-select: none;
   pointer-events: none;
 }
 
 </style>
 <body>
-  <div class="pointer">+</div>
   <div id="canvas_container">
+    <div class="pointer">+</div>
     <canvas id="canvas" class="pixelated"></canvas>
     <div id="info">
       Welcome to Pixels Alpha
@@ -324,4 +321,5 @@ document.addEventListener("keydown", (e) => {
 });
 
 </script>
+
 </html>
