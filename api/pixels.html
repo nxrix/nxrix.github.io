@@ -235,6 +235,11 @@ const update = () => {
 };
 update();
 
+show_pointer = false;
+document.querySelector(".pointer").style.display = "none";
+palette.style.display = "none";
+place.style.display = "none";
+
 nxstr.socket.addEventListener("close", async (e) => {
   console.log("Disconnected.");
   info.innerHTML += "Disconnected.<br>";
@@ -260,10 +265,6 @@ nxstr.socket.addEventListener("open", async (e) => {
         "REQ","msgs1",
         { "kinds":[10999],"authors":[host_pk],"limit":1 }
       ]));
-      show_pointer = false;
-      document.querySelector(".pointer").style.display = "none";
-      palette.style.display = "none";
-      place.style.display = "none";
       console.log("Host is offline.");
       info.innerHTML += "Host is offline.<br>";
     } else {
@@ -278,7 +279,13 @@ nxstr.socket.addEventListener("message", async (message) => {
   if (!event) return;
   let { kind , content , tags , pubkey , created_at , id } = event || {};
   if (kind==20999||kind==10999) {
-    data = (content);
+    data = content;
+    if (kind==20999) {
+      show_pointer = true;
+      document.querySelector(".pointer").style.display = "block";
+      palette.style.display = "grid";
+      place.style.display = "flex";
+    }
   } else if (kind==20666) {
     const [x,y,c] = content.split(",");
     if (x&&y&&c) {
@@ -324,4 +331,3 @@ document.addEventListener("keydown", (e) => {
 </script>
 
 </html>
-
