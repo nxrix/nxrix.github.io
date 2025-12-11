@@ -172,8 +172,14 @@ const px8 = new Pixel8(256,256);
 const ctx = canvas.getContext("2d");
 const img = ctx.createImageData(px8.w,px8.h);
 const img_data = img.data;
-canvas.width = px8.w;
-canvas.height = px8.h;
+canvas.width = px8.w*4;
+canvas.height = px8.h*4;
+ctx.imageSmoothingEnabled = false;
+
+const canvas2 = document.createElement("canvas");
+canvas2.width = px8.w;
+canvas2.height = px8.h;
+const ctx2 = canvas2.getContext("2d");
 
 const camera = new Camera2D(canvas_container,{z:0.75,maxZ:32},(e) => {
   canvas.style.transform = "scale("+e.z+") translateX("+e.x+"px) translateY("+e.y+"px)";
@@ -230,7 +236,47 @@ const update = () => {
     img_data[index + 2] = c[2];
     img_data[index + 3] = 255;
   }
-  ctx.putImageData(img,0,0);
+  ctx2.putImageData(img,0,0);
+  ctx.drawImage(canvas2,0,0,canvas.width,canvas.height);
+  
+  ctx.strokeStyle = "rgba(0,255,0,1)";
+  ctx.lineWidth = 1;
+
+  for (let y = 0; y < px8.h; y++) {
+    for (let x = 0; x < px8.w; x++) {
+      const i = y * px8.w + x;
+      if (px8.buffer[i]<32) continue;
+      const sx = x * 8;
+      const sy = y * 8;
+      const l = (x>0)      ?px8.buffer[i-1    ]:0;
+      const r = (x<px8.w-1)?px8.buffer[i+1    ]:0;
+      const u = (y>0)      ?px8.buffer[i-px8.w]:0;
+      const d = (y<px8.h-1)?px8.buffer[i+px8.w]:0;
+      //ctx.save();
+      //ctx.beginPath();
+      //ctx.rect(sx, sy, 8, 8);
+      //ctx.clip();
+      ctx.beginPath();
+      if (l < 32) {
+        ctx.moveTo(sx + 0.5, sy + 0.0);
+        ctx.lineTo(sx + 0.5, sy + 8.0);
+      }
+      if (r < 32) {
+        ctx.moveTo(sx + 7.5, sy + 0.0);
+        ctx.lineTo(sx + 7.5, sy + 8.0);
+      }
+      if (u < 32) {
+        ctx.moveTo(sx + 0.0, sy + 0.5);
+        ctx.lineTo(sx + 8.0, sy + 0.5);
+      }
+      if (d < 32) {
+        ctx.moveTo(sx + 0.0, sy + 7.5);
+        ctx.lineTo(sx + 8.0, sy + 7.5);
+      }
+      ctx.stroke();
+      //ctx.restore();
+    }
+  }
   requestAnimationFrame(update);
 };
 update();
@@ -331,3 +377,4 @@ document.addEventListener("keydown", (e) => {
 </script>
 
 </html>
+
