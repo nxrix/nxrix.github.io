@@ -174,14 +174,14 @@ const px8 = new Pixel8(256,256);
 const ctx = canvas.getContext("2d");
 const img = ctx.createImageData(px8.w,px8.h);
 const img_data = img.data;
-canvas.width = px8.w*8;
-canvas.height = px8.h*8;
+canvas.width = px8.w;//*8;
+canvas.height = px8.h;//*8;
 ctx.imageSmoothingEnabled = false;
 
-const canvas2 = document.createElement("canvas");
+/*const canvas2 = document.createElement("canvas");
 canvas2.width = px8.w;
 canvas2.height = px8.h;
-const ctx2 = canvas2.getContext("2d");
+const ctx2 = canvas2.getContext("2d");*/
 
 const camera = new Camera2D(canvas_container,{z:0.75,maxZ:32},(e) => {
   canvas.style.transform = "scale("+e.z+") translateX("+e.x+"px) translateY("+e.y+"px)";
@@ -238,7 +238,8 @@ const update = () => {
     img_data[index + 2] = c[2];
     img_data[index + 3] = 255;
   }
-  ctx2.putImageData(img,0,0);
+  ctx.putImageData(img,0,0);
+  /*ctx2.putImageData(img,0,0);
   ctx.drawImage(canvas2,0,0,canvas.width,canvas.height);
   
   ctx.strokeStyle = "rgba(0,255,0,1)";
@@ -278,7 +279,7 @@ const update = () => {
       ctx.stroke();
       //ctx.restore();
     }
-  }
+  }*/
   requestAnimationFrame(update);
 };
 update();
@@ -352,6 +353,10 @@ const pset = async (x,y,c) => {
   const xi = parseInt(x);
   const yi = parseInt(y);
   const ci = parseInt(c)&31;
+  if (data[xi+yi*256]>32) {
+    alert("this pixel is locked");
+    return;
+  }
   if (xi>-1&&yi>-1&&xi<256&&yi<256) {
     const signed = await nxstr.sign({
       "content": `${xi},${yi},${ci}`,
@@ -379,6 +384,7 @@ document.addEventListener("keydown", (e) => {
 </script>
 
 </html>
+
 
 
 
