@@ -339,9 +339,9 @@ nxstr.socket.addEventListener("message", async (message) => {
     if (x&&y&&c) {
       const xi = parseInt(x);
       const yi = parseInt(y);
-      const ci = parseInt(c)&31;
+      const ci = parseInt(c)&63;
       if (xi>-1&&yi>-1&&xi<256&&yi<256) {
-        data = data.slice(0,xi+yi*256)+ci.toString(32)+data.slice(xi+yi*256+1);
+        data = data.slice(0,xi+yi*256)+chars[ci]+data.slice(xi+yi*256+1);
       }
     }
   }
@@ -379,6 +379,7 @@ document.addEventListener("keydown", (e) => {
 </script>
 
 </html>
+
 
 
 
