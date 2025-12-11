@@ -174,8 +174,8 @@ const px8 = new Pixel8(256,256);
 const ctx = canvas.getContext("2d");
 const img = ctx.createImageData(px8.w,px8.h);
 const img_data = img.data;
-canvas.width = px8.w*4;
-canvas.height = px8.h*4;
+canvas.width = px8.w*8;
+canvas.height = px8.h*8;
 ctx.imageSmoothingEnabled = false;
 
 const canvas2 = document.createElement("canvas");
@@ -379,5 +379,6 @@ document.addEventListener("keydown", (e) => {
 </script>
 
 </html>
+
 
 
