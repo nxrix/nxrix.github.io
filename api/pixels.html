@@ -301,7 +301,7 @@ nxstr.socket.addEventListener("open", async (e) => {
   info.innerHTML += "Connected.<br>";
   nxstr.socket.send(JSON.stringify([
     "REQ","msgs",
-    { "kinds":[20666],"authors":[host_pk],"limit":0 },
+    { "kinds":[20666,20668],"authors":[host_pk],"limit":0 },
     { "kinds":[20999],"authors":[host_pk],"#p":[nxstr.pk],"limit":0 }
   ]));
   const signed = await nxstr.sign({
@@ -347,7 +347,7 @@ nxstr.socket.addEventListener("message", async (message) => {
         data = data.slice(0,xi+yi*256)+chars[ci]+data.slice(xi+yi*256+1);
       }
     }
-  }
+  } else if (kind==20668) alert(content);
 });
 
 const pset = async (x,y,c) => {
@@ -386,6 +386,7 @@ document.addEventListener("keydown", (e) => {
 </script>
 
 </html>
+
 
 
 
