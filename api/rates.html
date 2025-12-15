@@ -1083,7 +1083,7 @@ window.onload = async () => {
       "bhd": ["bhd", "Bahraini Dinar"]
     };
     const g = `<div style="background:radial-gradient(circle at 60% 40%,#fc0,#954);width:100%;height:100%;"></div>`;
-    const s = "<div style=\"background:radial-gradient(circle at 60% 40%,#ddd,#667);width:100%;height:100%;\"></div>";
+    const s = `<div style="background:radial-gradient(circle at 60% 40%,#ddd,#667);width:100%;height:100%;"></div>`;
     const icons = {
       "usd_xau": g,
       "18ayar": g,
@@ -1108,6 +1108,7 @@ window.onload = async () => {
       .map(i => {
         const r = slugs[i.code] || [];
         const y = yesterday.prices.find((y) => y.code == i.code) || {};
+		if (i.code=="ton") i.icon = "https://nxrix.github.io/assets/img/svg/circle/ton.svg";
         return {
           slug: r[0] || i.code,
           name: (r[1] || i.en).replace(/\b\w/g, (c) => c.toUpperCase()),
