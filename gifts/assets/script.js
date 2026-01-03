@@ -149,7 +149,7 @@ const tonnel_search = async ({page=1,sort="d",asset="TON",name,model,backdrop,sy
       })
     })).json()).gifts.map(i=>{
       return {
-        price: i.salePrice,
+        price: i.salePriceTon,
         gift_num: i.giftNum,
         name: i.giftName,
         model: i.model,
