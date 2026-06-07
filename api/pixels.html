@@ -3,9 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.jsdelivr.net/npm/bitcoinjs-lib-browser@5.1.7/bitcoinjs.min.js"></script>
-  <script src="https://bundle.run/noble-secp256k1@1.2.14"></script>
-  <script src="https://nxrix.github.io/assets/js/nxstr.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@noble/secp256k1@3.1.0/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/nxrix/nxstr/nxstr.js"></script>
   <script src="https://nxrix.github.io/assets/js/camera_2d.js"></script>
   <script src="https://nxrix.github.io/pixel-8/src/pixel8.js"></script>
   <title>Pixels Client</title>
@@ -201,7 +200,7 @@ if (location.hash.length==65) {
 }
 
 try {
-  nxstr.generate_keys();
+  nxstr.generateKeys();
   nxstr.connect("wss://nostr.dbtc.link");
 } catch (e) {
   info.innerHTML += e.toString().replaceAll("\n","<br>")+"<br>";
@@ -386,7 +385,3 @@ document.addEventListener("keydown", (e) => {
 </script>
 
 </html>
-
-
-
-
