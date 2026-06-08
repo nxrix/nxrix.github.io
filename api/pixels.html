@@ -200,7 +200,7 @@ if (location.hash.length==65) {
 let socket
 try {
   nxstr.generateKeys();
-  socket = new WebSocket("wss://nostr.dbtc.link");
+  socket = new WebSocket("wss://relay.damus.io");
 } catch (e) {
   info.innerHTML += e.toString().replaceAll("\n","<br>")+"<br>";
 }
@@ -325,19 +325,6 @@ socket.addEventListener("open", async (e) => {
 
 socket.addEventListener("message", async (message) => {
   const [type,sub,event] = JSON.parse(message.data);
-  if (type === "AUTH") {
-    const challenge = sub;
-    const authEvent = await nxstr.sign({
-      kind: 22242,
-      content: "",
-      tags: [
-        ["relay", socket.url],
-        ["challenge", challenge]
-      ]
-    });
-    socket.send(JSON.stringify(["AUTH", authEvent]));
-    return;
-  }
   if (!event) return;
   let { kind , content , tags , pubkey , created_at , id } = event || {};
   if (kind==20999||kind==10999) {
