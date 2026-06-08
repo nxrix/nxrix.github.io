@@ -3,8 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="https://cdn.jsdelivr.net/npm/@noble/secp256k1@3.1.0/index.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/gh/nxrix/nxstr/nxstr.js"></script>
   <script src="https://nxrix.github.io/assets/js/camera_2d.js"></script>
   <script src="https://nxrix.github.io/pixel-8/src/pixel8.js"></script>
   <title>Pixels Client</title>
@@ -130,8 +128,9 @@ html , body {
   <div id="palette"></div>
   <div id="place">Place</div>
 </body>
-<script>
-
+<script type="module">
+import * as nxstr from "https://cdn.jsdelivr.net/gh/nxrix/nxstr@v1.0.0/nxstr.js";
+  
 const unpack = (a) => {
   const r = new Uint8Array((a.length*8)/5);
   let acc = 0;
@@ -157,7 +156,7 @@ for (let x=0;x<4;x++) {
   }
 }
 
-const setcolor = (n,k) => {
+window.setcolor = (n,k) => {
   color = n;
   const cols = document.querySelectorAll(".color");
   for (let i=0;i<32;i++) {
@@ -198,10 +197,10 @@ if (location.hash.length==65) {
 } else {
   host_pk = "906b4b816a94101b9225fdb6afbaa50dc23694b9938a822c6ea4b1051818b2b9";
 }
-
+let socket
 try {
   nxstr.generateKeys();
-  nxstr.connect("wss://nostr.dbtc.link");
+  socket = new WebSocket("wss://nostr.dbtc.link");
 } catch (e) {
   info.innerHTML += e.toString().replaceAll("\n","<br>")+"<br>";
 }
@@ -290,28 +289,28 @@ document.querySelector(".pointer").style.display = "none";
 palette.style.display = "none";
 place.style.display = "none";
 
-nxstr.socket.addEventListener("close", async (e) => {
+socket.addEventListener("close", async (e) => {
   console.log("Disconnected.");
   info.innerHTML += "Disconnected.<br>";
 });
 
-nxstr.socket.addEventListener("open", async (e) => {
+socket.addEventListener("open", async (e) => {
   console.log("Connected.");
   info.innerHTML += "Connected.<br>";
-  nxstr.socket.send(JSON.stringify([
+  socket.send(JSON.stringify([
     "REQ","msgs",
     { "kinds":[20666,20668],"authors":[host_pk],"limit":0 },
-    { "kinds":[20999],"authors":[host_pk],"#p":[nxstr.pk],"limit":0 }
+    { "kinds":[20999],"authors":[host_pk],"#p":[nxstr.getPublicKey()],"limit":0 }
   ]));
   const signed = await nxstr.sign({
     "content": "",
     "kind": 20999,
     "tags": [["p",host_pk]]
   });
-  nxstr.socket.send(JSON.stringify(["EVENT",signed]));
+  socket.send(JSON.stringify(["EVENT",signed]));
   setTimeout(()=>{
     if (data=="0".repeat(256*256)) {
-      nxstr.socket.send(JSON.stringify([
+      socket.send(JSON.stringify([
         "REQ","msgs1",
         { "kinds":[10999],"authors":[host_pk],"limit":1 }
       ]));
@@ -324,8 +323,21 @@ nxstr.socket.addEventListener("open", async (e) => {
   },1500);
 });
 
-nxstr.socket.addEventListener("message", async (message) => {
+socket.addEventListener("message", async (message) => {
   const [type,sub,event] = JSON.parse(message.data);
+  if (type === "AUTH") {
+    const challenge = sub;
+    const authEvent = await nxstr.sign({
+      kind: 22242,
+      content: "",
+      tags: [
+        ["relay", socket.url],
+        ["challenge", challenge]
+      ]
+    });
+    socket.send(JSON.stringify(["AUTH", authEvent]));
+    return;
+  }
   if (!event) return;
   let { kind , content , tags , pubkey , created_at , id } = event || {};
   if (kind==20999||kind==10999) {
@@ -364,7 +376,7 @@ const pset = async (x,y,c) => {
       "kind": 20666,
       "tags": [["p",host_pk]]
     });
-    nxstr.socket.send(JSON.stringify(["EVENT",signed]));
+    socket.send(JSON.stringify(["EVENT",signed]));
   }
 }
 
