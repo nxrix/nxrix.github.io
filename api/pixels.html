@@ -362,7 +362,7 @@ socket.addEventListener("message", async (message) => {
 });
 
 const pset = async (x,y,c) => {
-  if (!nxstr.socket) return;
+  if (!socket) return;
   const xi = parseInt(x);
   const yi = parseInt(y);
   const ci = parseInt(c)&31;
