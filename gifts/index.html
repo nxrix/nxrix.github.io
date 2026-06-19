@@ -168,7 +168,7 @@ description: ""
       <div id="theme_btn" onclick="change_theme()" style="height:40px;width:90%;margin:8px 5%;margin-bottom:48px;"></div>
 
     </div>
-    <div class="content page" id="table_page"></div>
+    <div class="content page" id="table_page"><h2>Collections</h2></div>
     <div class="content page" id="gifts_page"></div>
     <!--div class="content page" id="profile_page"></div-->
   </div>
@@ -204,17 +204,19 @@ window.Telegram.WebApp.disableVerticalSwipes();
 
 import {Runtime, Inspector} from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@4/dist/runtime.js";
 
-import table from "https://api.observablehq.com/d/f190ad3ab40118da.js?v=4";
+import table from "https://api.observablehq.com/@nxrix/telegram-gifts-table@217.js?v=4";
 import gifts from "https://api.observablehq.com/d/c8849d5ba44a5cd0.js?v=4";
 
 const runtime = new Runtime();
 
 runtime.module(table, (name,i) => {
-  const cell = document.createElement("div");
-  cell.className = "cell";
-  cell.id = `cell_${name||i}`;
-  table_page.appendChild(cell);
-  return new Inspector(cell);
+  if (name === "table") {
+    const cell = document.createElement("div");
+    cell.className = "cell";
+    cell.id = `cell_${name||i}`;
+    table_page.appendChild(cell);
+    return new Inspector(cell);
+  }
 });
 
 runtime.module(gifts, (name,i) => {
