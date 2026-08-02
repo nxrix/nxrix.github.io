@@ -14,13 +14,13 @@ description: ""
 <script>
 
 const k = new Date("2021-09-26T10:37:00.000+03:30");
-const px8 = new Pixel8(54,8);
+const px8 = new Pixel8(54,16);
 
 canvas.style.imageRendering = "pixelated";
 canvas.width = px8.w;
 canvas.height = px8.h;
-canvas.style.width = px8.w*2+"px";
-canvas.style.height = px8.h*2+"px";
+canvas.style.width = px8.w*3+"px";
+canvas.style.height = px8.h*3+"px";
 const ctx = canvas.getContext("2d");
 const img = ctx.createImageData(px8.w,px8.h);
 const img_data = img.data;
