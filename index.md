@@ -4,7 +4,9 @@ title: "Home"
 description: ""
 ---
 
-<canvas id="canvas"></canvas>
+<div style="display:flex">
+  <canvas id="canvas"></canvas>
+</div>
 
 # Home
 
@@ -17,8 +19,8 @@ const px8 = new Pixel8(54,8);
 canvas.style.imageRendering = "pixelated";
 canvas.width = px8.w;
 canvas.height = px8.h;
-canvas.style.width = px8.w*2;
-canvas.style.height = px8.h*2;
+canvas.style.width = px8.w*2+"px";
+canvas.style.height = px8.h*2+"px";
 const ctx = canvas.getContext("2d");
 const img = ctx.createImageData(px8.w,px8.h);
 const img_data = img.data;
