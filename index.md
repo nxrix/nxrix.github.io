@@ -4,7 +4,7 @@ title: "Home"
 description: ""
 ---
 
-<canvas></canvas>
+<canvas id="canvas"></canvas>
 
 # Home
 
@@ -12,23 +12,20 @@ description: ""
 <script>
 
 const k = new Date("2021-09-26T10:37:00.000+03:30");
-const px8 = new Pixel8(54,9);
+const px8 = new Pixel8(54,8);
 
-const canvas = document.createElement("canvas");
 canvas.style.imageRendering = "pixelated";
 canvas.width = px8.w;
 canvas.height = px8.h;
 canvas.style.width = px8.w*2;
 canvas.style.height = px8.h*2;
-document.body.appendChild(canvas);
 const ctx = canvas.getContext("2d");
 const img = ctx.createImageData(px8.w,px8.h);
 const img_data = img.data;
 
 let t = 0;
 const update = () => {
-  px8.cls();
-
+  px8.cls(32);
   const now = Date.now();
   const diff = new Date(now - k);
   const n = Math.floor(diff.getTime() / 1000);
