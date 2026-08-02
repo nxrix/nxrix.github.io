@@ -1,28 +1,7 @@
-title: Nxrix
-email: nxrixz@gmail.com
-description: >
-  Hello World
+remote_theme: nxrix/theme
 
-baseurl: ""
-
-url: "https://nxrix.github.io/"
-
-twitter_username: ZNxrix
-github_username:  Nxrix
-
-theme: null
-permalink: pretty
-
-collections:
-  pages:
-    output: true
-  projects:
-    output: true
-  games:
-    output: true
-  tools:
-    output: true
-
+#baseurl: ""
+#permalink: pretty
 #kramdown:
 #  syntax_highlighter_opts:
 #    span:

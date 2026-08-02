@@ -1,2 +1,0 @@
-Country Icons are from https://github.com/HatScripts/circle-flags
-Crypto Icons are from https://cryptologos.cc/
