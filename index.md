@@ -16,8 +16,10 @@ const px8 = new Pixel8(54,9);
 
 const canvas = document.createElement("canvas");
 canvas.style.imageRendering = "pixelated";
-canvas.width = px8.w*2;
-canvas.height = px8.h*2;
+canvas.width = px8.w;
+canvas.height = px8.h;
+canvas.style.width = px8.w*2;
+canvas.style.height = px8.h*2;
 document.body.appendChild(canvas);
 const ctx = canvas.getContext("2d");
 const img = ctx.createImageData(px8.w,px8.h);
@@ -28,7 +30,6 @@ const update = () => {
   px8.cls();
 
   const now = Date.now();
-  const e = findEvent(now);
   const diff = new Date(now - k);
   const n = Math.floor(diff.getTime() / 1000);
   const str1 = Math.floor(n / (60 * 60 * 24)).toString();
