@@ -4,7 +4,7 @@ title: "Home"
 description: ""
 ---
 
-<div style="display:flex">
+<div style="display:flex;justify-content:center">
   <canvas id="canvas"></canvas>
 </div>
 
