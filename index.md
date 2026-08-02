@@ -64,11 +64,13 @@ const update = () => {
 
   for (let i = 0; i < px8.w*px8.h; i++) {
     const n = px8.buffer[i];
-    const c = Pixel8.palette[n];
     const index = i * 4;
-    img_data[index    ] = c[0];
-    img_data[index + 1] = c[1];
-    img_data[index + 2] = c[2];
+    if (n<32) {
+      const c = Pixel8.palette[n];
+      img_data[index    ] = c[0];
+      img_data[index + 1] = c[1];
+      img_data[index + 2] = c[2];
+    }
     img_data[index + 3] = n===32?0:255;
   }
   ctx.putImageData(img,0,0);
