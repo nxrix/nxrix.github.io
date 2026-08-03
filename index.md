@@ -10,6 +10,8 @@ description: ""
 
 # Home
 
+{% include previews.html items=site.data.lists.main %}
+
 <script src="https://nxrix.github.io/pixel-8/src/pixel8.js"></script>
 <script>
 
