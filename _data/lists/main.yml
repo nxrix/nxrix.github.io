@@ -1,6 +1,16 @@
+- title: Hypercomplex
+  description: A tool for exploring Latin-square 4D hypercomplex fractals
+  url: /hypercomplex
+  thumbnail: https://nxrix.github.io/assets/images/thumbnails/hypercomplex.webp
+
 - title: Binary Black Holes
   url: /notebooks/binary-black-holes
   thumbnail: https://static.observableusercontent.com/thumbnail/68158ef87cbe89745567e758739b82e3e089afb4f2887db7f711e849aa009b62.jpg
+
+- title: Pixel-8
+  description: Web based fantasy console and JavaScript library
+  url: /pixel-8
+  thumbnail: https://nxrix.github.io/assets/images/thumbnails/px8.webp
 
 - title: Bitmask Fractals
   url: /notebooks/bitmask-fractals
