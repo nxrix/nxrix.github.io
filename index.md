@@ -9,12 +9,16 @@ description: "My personal homepage"
 </div>
 
 # Home
-<br>
+<div style="max-width:90ch;padding:24px;font-size:13px;border-radius:8px;margin:16px 0;outline:1px solid var(--theme-foreground-faintest)">
+  <img draggable="false" src="./assets/images/icons/skin-2.png" width="36" style="display:block;margin-left:-2px;margin-bottom:-50px;image-rendering:pixelated">
+  <img draggable="false" src="./assets/images/icons/skin-1.png" width="32" style="float:left;border-radius:4px;margin:16px 16px 0 0;image-rendering:pixelated">
+  <br>
+  Hello! I'm nxrix. This is where I share the things I make. I love beautiful and colorful things. I mostly work with JavaScript, C, Lua, and GLSL.
+</div>
 {% include previews.html items=site.data.lists.main %}
 
 <hr>
 ## Fractals
-<br>
 {% include previews.html items=site.data.lists.fractals %}
 
 <hr>
