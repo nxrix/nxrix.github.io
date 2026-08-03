@@ -1,5 +1,9 @@
 remote_theme: nxrix/theme
 
+collections:
+  notebooks:
+    output: true
+
 #baseurl: ""
 #permalink: pretty
 #kramdown:
