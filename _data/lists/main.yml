@@ -6,3 +6,12 @@
   description: Web based fantasy console and JavaScript library
   url: /pixel-8
   thumbnail: https://nxrix.github.io/assets/images/thumbnails/px8.webp
+
+- title: Life
+  description: All life-like cellular automaton rules
+  url: /life
+  thumbnail: https://nxrix.github.io/assets/images/thumbnails/life.webp
+
+- title: XYZINE
+  url: /xyzine
+  thumbnail: https://nxrix.github.io/assets/images/thumbnails/xyzine.webp
