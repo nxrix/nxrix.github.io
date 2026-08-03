@@ -12,6 +12,9 @@ description: ""
 <br>
 {% include previews.html items=site.data.lists.main %}
 
+## Fractals
+{% include previews.html items=site.data.lists.fractals %}
+
 <script src="https://nxrix.github.io/pixel-8/src/pixel8.js"></script>
 <script>
 
