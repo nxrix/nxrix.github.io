@@ -4,12 +4,12 @@ title: "Home"
 description: ""
 ---
 
-<div style="display:flex;justify-content:center">
+<div style="display:flex;justify-content:center;margin-bottom:calc(16px + 1rem)">
   <canvas id="canvas"></canvas>
 </div>
 
 # Home
-
+<br>
 {% include previews.html items=site.data.lists.main %}
 
 <script src="https://nxrix.github.io/pixel-8/src/pixel8.js"></script>
