@@ -1,0 +1,17 @@
+- title: Hypercomplex
+  description: A tool for exploring Latin-square 4D hypercomplex fractals
+  url: /hypercomplex
+  thumbnail: https://nxrix.github.io/assets/images/thumbnails/hypercomplex.webp
+
+- title: Complex
+  url: /notebooks/complex-fractals
+  thumbnail: https://static.observableusercontent.com/thumbnail/8d20c8554fa7e8c6708f90fd5a33d29baca688d6c36bdd37698e4a8a9e544cb1.jpg
+
+- title: Bitmask
+  url: /notebooks/bitmask-fractals
+  thumbnail: https://static.observableusercontent.com/thumbnail/09505841e745ce6d5b9cc23e2a9b0365439de21c51fe7f3ec56c960ff803bd9b.jpg
+
+- title: P-Adic
+  description: Fractals based on p-adic numbers
+  url: /notebooks/p-adic-fractals
+  thumbnail: https://static.observableusercontent.com/thumbnail/1959a0416716b99be23dcb26a6bfd879191aa09171c4ca6720abf8f0315370a6.jpg
