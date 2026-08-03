@@ -14,7 +14,7 @@ description: ""
 <script>
 
 const k = new Date("2021-09-26T10:37:00.000+03:30");
-const px8 = new Pixel8(54,16);
+const px8 = new Pixel8(62,16);
 
 canvas.style.imageRendering = "pixelated";
 canvas.width = px8.w;
