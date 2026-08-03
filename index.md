@@ -19,7 +19,6 @@ description: "My personal homepage"
 
 <hr>
 ## Contact
-
 [![Telegram](https://img.shields.io/badge/-Telegram-26a5e4?style=flat&logo=telegram&logoColor=fff)](https://t.me/nxrix)
 [![Gmail](https://img.shields.io/badge/-Gmail-ea4335?style=flat&logo=gmail&logoColor=fff)](mailto:nxrixz@gmail.com)
 [![X](https://img.shields.io/badge/-X-000?style=flat&logo=x&logoColor=fff)](https://x.com/nxrixwastaken)
