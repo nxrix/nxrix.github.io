@@ -13,7 +13,7 @@ description: "My personal homepage"
   <img draggable="false" src="./assets/images/icons/skin-2.png" width="36" height="36" style="display:block;margin-left:-2px;margin-bottom:-50px;image-rendering:pixelated">
   <img draggable="false" src="./assets/images/icons/skin-1.png" width="32" height="32" style="float:left;border-radius:4px;margin:16px 16px 0 0;image-rendering:pixelated">
   <br>
-  Hello! I'm nxrix. This is where I share the things I make. I love beautiful and colorful things. I mostly work with JavaScript, C, Lua, and GLSL.
+  Hello! I'm nxrix. This is where I share things I make. I love beautiful and colorful things. I mostly work with JavaScript, C, Lua, and GLSL.
 </div>
 {% include previews.html items=site.data.lists.main %}
 
@@ -24,13 +24,13 @@ description: "My personal homepage"
 <hr>
 ## Contact
 <div>
-  <a href="https://t.me/nxrix">
+  <a href="https://t.me/nxrix" style="text-decoration:none">
     <img src="https://img.shields.io/badge/-Telegram-26a5e4?style=flat&logo=telegram&logoColor=fff" alt="Telegram">
   </a>
-  <a href="mailto:nxrixz@gmail.com">
+  <a href="mailto:nxrixz@gmail.com" style="text-decoration:none">
     <img src="https://img.shields.io/badge/-Gmail-ea4335?style=flat&logo=gmail&logoColor=fff" alt="Gmail">
   </a>
-  <a href="https://x.com/nxrixwastaken">
+  <a href="https://x.com/nxrixwastaken" style="text-decoration:none">
     <img src="https://img.shields.io/badge/-X-000?style=flat&logo=x&logoColor=fff" alt="X">
   </a>
 </div>
