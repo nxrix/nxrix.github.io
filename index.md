@@ -22,8 +22,14 @@ description: "My personal homepage"
 {% include previews.html items=site.data.lists.fractals %}
 
 <hr>
-## Contact
+## Links
 <div>
+  <a href="https://github.com/nxrix">
+    <img src="https://img.shields.io/badge/-GitHub-181717?style=flat&logo=github&logoColor=fff" alt="GitHub">
+  </a>
+  <a href="https://observablehq.com/@nxrix">
+    <img src="https://img.shields.io/badge/-Observable-353E58?style=flat&logo=observable&logoColor=fff" alt="Observable">
+  </a>
   <a href="https://t.me/nxrix" style="text-decoration:none">
     <img src="https://img.shields.io/badge/-Telegram-26a5e4?style=flat&logo=telegram&logoColor=fff" alt="Telegram">
   </a>
