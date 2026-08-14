@@ -1,0 +1,16 @@
+---
+layout: default
+---
+<script type="module">
+import { Runtime, Inspector } from "https://cdn.jsdelivr.net/npm/@observablehq/runtime@5/dist/runtime.js";
+const params = new URLSearchParams(location.search);
+const id = params.get("notebook");
+if (!id) {
+  document.querySelector("main").textContent = "No Observable notebook specified.";
+} else {
+  const { default: define } = await import(
+    `https://api.observablehq.com/${id}.js?v=4`
+  );
+  new Runtime().module(define, Inspector.into("main"));
+}
+</script>
