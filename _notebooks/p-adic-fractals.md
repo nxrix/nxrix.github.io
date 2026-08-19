@@ -1,5 +1,5 @@
 ---
-layout: default
+layout: notebook
 title: P-Adic Fractals
 description: Fractals based on p-adic numbers
 notebook: "@nxrix/p-adic-fractals"
