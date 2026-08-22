@@ -22,6 +22,10 @@ description: "My personal homepage"
 {% include previews.html items=site.data.lists.fractals %}
 
 <hr>
+## Math
+{% include previews.html items=site.data.lists.math %}
+
+<hr>
 ## Links
 <div>
   <a href="https://github.com/nxrix">
