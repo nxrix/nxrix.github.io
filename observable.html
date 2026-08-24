@@ -12,6 +12,19 @@ if (!id) {
   const { default: define } = await import(
     `https://api.observablehq.com/${id}.js?v=4`
   );
-  new Runtime().module(define, Inspector.into("main"));
+  //new Runtime().module(define, Inspector.into("main"));
+  const names = new Set();
+  const runtime = new Runtime();
+  runtime.module(define, name => {
+    if (name?.startsWith("viewof ")) {
+      const v = name.slice(7);
+      names.add(v);
+      return Inspector.into("main")();
+    }
+    if (names.has(name)) {
+      return true;
+    }
+    return Inspector.into("main")();
+  });
 }
 </script>
