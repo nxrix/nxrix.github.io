@@ -1,5 +1,6 @@
 remote_theme: nxrix/theme
-
+plugins:
+  - jekyll-sitemap
 collections:
   notebooks:
     output: true
