@@ -25,26 +25,6 @@ description: "My personal homepage"
 ## Math
 {% include previews.html items=site.data.lists.math %}
 
-<hr>
-## Links
-<div>
-  <a href="https://github.com/nxrix">
-    <img src="https://img.shields.io/badge/-GitHub-181717?style=flat&logo=github&logoColor=fff" alt="GitHub">
-  </a>
-  <a href="https://observablehq.com/@nxrix">
-    <img src="https://img.shields.io/badge/-Observable-353E58?style=flat&logo=observable&logoColor=fff" alt="Observable">
-  </a>
-  <a href="https://t.me/nxrix" style="text-decoration:none">
-    <img src="https://img.shields.io/badge/-Telegram-26a5e4?style=flat&logo=telegram&logoColor=fff" alt="Telegram">
-  </a>
-  <a href="mailto:nxrixz@gmail.com" style="text-decoration:none">
-    <img src="https://img.shields.io/badge/-Gmail-ea4335?style=flat&logo=gmail&logoColor=fff" alt="Gmail">
-  </a>
-  <a href="https://x.com/nxrixwastaken" style="text-decoration:none">
-    <img src="https://img.shields.io/badge/-X-000?style=flat&logo=x&logoColor=fff" alt="X">
-  </a>
-</div>
-
 <script>
 const k = new Date("2021-09-26T10:37:00.000+03:30");
 const update = () => {
