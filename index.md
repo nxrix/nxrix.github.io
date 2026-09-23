@@ -5,7 +5,7 @@ description: "My personal homepage"
 ---
 
 <div style="display:flex;justify-content:center;margin-bottom:calc(16px + 1rem)">
-  <h2 id="time"></h2>
+  <h2 id="time" style="transform:scale(1.25,1)"></h2>
 </div>
 
 # Home
