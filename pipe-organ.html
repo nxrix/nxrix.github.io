@@ -10,12 +10,17 @@ title: Pipe Organ
     user-select: none;
     touch-action: none;
   }
-  .row { display: flex; height: 120px; }
+  .row {
+    display: flex;
+    height: 120px;
+    outline: 1px solid #000;
+    border-radius: 4px;
+  }
   .w, .b {
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    font: 9px monospace;
+    font: 8px monospace;
   }
   .w {
     flex: 1;
@@ -51,6 +56,7 @@ title: Pipe Organ
   }
   [aria-pressed=true] {
     background: #960;
+    color: #fff;
     border-color: #c90;
   }
   input { accent-color: #c90; }
