@@ -105,7 +105,10 @@ title: Pipe Organ
     vox: [1, 0.3, 0.5, 0.15, 0.25, 0.08]
   };
 
-  const stop = (name, ratios, wave, gain, extra) => ({ name, ratios, wave, gain, on: false, ...extra });
+  // s1
+  // const stop = (name, ratios, wave, gain, extra) => ({ name, ratios, wave, gain, on: false, ...extra });
+  const stop = (name, ratios, wave, gain, extra) => ({ name, ratios, wave, gain, on: false, pan: (Math.random() - 0.5) * 0.7, ...extra });
+  // e1
 
   const groups = {
     Flutes: [
@@ -191,12 +194,33 @@ title: Pipe Organ
     const hall = ctx.createConvolver();
     const length = ctx.sampleRate * 3.4;
     const impulse = ctx.createBuffer(2, length, ctx.sampleRate);
-    for (let c = 0; c < 2; c++) {
+    /*for (let c = 0; c < 2; c++) {
       impulse.getChannelData(c).set(Float32Array.from({ length }, (_, i) => (Math.random() * 2 - 1) * (1 - i / length) ** 3));
+    }*/
+    // s2
+    for (let c = 0; c < 2; c++) {
+      const data = impulse.getChannelData(c);
+      data.set(Float32Array.from({ length }, (_, i) => (Math.random() * 2 - 1) * (1 - i / length) ** 3));
+      [11, 19, 27, 36, 47, 59, 73, 89].forEach((ms, i) => {
+        data[Math.floor(ms * ctx.sampleRate / 1000)] += (i % 2 ? -1 : 1) * 0.55 ** i * 0.5 * (c ? 0.8 : 1);
+      });
     }
+    // e2
     hall.buffer = impulse;
     noise = ctx.createBuffer(1, ctx.sampleRate, ctx.sampleRate);
     noise.getChannelData(0).set(Float32Array.from({ length: ctx.sampleRate }, () => Math.random() * 2 - 1));
+    // s3
+    const blower = ctx.createBufferSource();
+    const rumble = ctx.createBiquadFilter();
+    const rumbleGain = ctx.createGain();
+    blower.buffer = noise;
+    blower.loop = true;
+    rumble.type = "lowpass";
+    rumble.frequency.value = 300;
+    rumbleGain.gain.value = 0.015;
+    blower.connect(rumble).connect(rumbleGain).connect(master);
+    blower.start();
+    // e3
     Object.entries(harmonics).forEach(([name, h]) => {
       waves[name] = ctx.createPeriodicWave(new Float32Array(h.length + 1), Float32Array.of(0, ...h));
     });
@@ -228,22 +252,52 @@ title: Pipe Organ
     document.querySelectorAll(`[data-m="${m}"]`).forEach((e) => e.classList.toggle("on", on));
   };
 
+  // s4
+  const chiff = { sine: 0.02, flute: 0.1, quint: 0.09, spitz: 0.09, pluck: 0.05, gemshorn: 0.07, diapason: 0.07, string: 0.04, gamba: 0.04, reed: 0.06, oboe: 0.05, krum: 0.05, vox: 0.04 };
+
+  const panner = (v) => {
+    if (!ctx.createStereoPanner) return ctx.createGain();
+    const p = ctx.createStereoPanner();
+    p.pan.value = Math.max(-1, Math.min(1, v));
+    return p;
+  };
+  // e4
+
   const sound = (parts, base) => {
     const t = ctx.currentTime;
     const out = ctx.createGain();
     out.gain.setValueAtTime(0, t);
-    out.gain.linearRampToValueAtTime(0.3, t + 0.045);
+    // s5a
+    // out.gain.linearRampToValueAtTime(0.3, t + 0.045);
+    out.gain.linearRampToValueAtTime(0.27 + Math.random() * 0.06, t + 0.045 + Math.random() * 0.02);
+    // e5a
     out.connect(bus);
 
-    const sources = parts.filter(([, f]) => f < 9000).map(([wave, f, level, cents = 0, decay]) => {
+    // s5b
+    const oscs = [];
+    // e5b
+    // s5c
+    // const sources = parts.filter(([, f]) => f < 9000).map(([wave, f, level, cents = 0, decay]) => {
+    const sources = parts.filter(([, f]) => f < 9000).map(([wave, f, level, cents = 0, decay, partPan = 0]) => {
+    // e5c
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
       osc.setPeriodicWave(waves[wave]);
-      osc.frequency.value = f;
-      osc.detune.value = (Math.random() - 0.5) * 6 + cents;
+      // s5d
+      // osc.frequency.value = f;
+      osc.frequency.setValueAtTime(f * 2 ** ((3 + Math.random() * 4) / 1200), t);
+      osc.frequency.exponentialRampToValueAtTime(f, t + 0.04 + Math.random() * 0.05);
+      // osc.detune.value = (Math.random() - 0.5) * 6 + cents;
+      const det = (Math.random() - 0.5) * 6 + cents;
+      osc.detune.value = det;
+      oscs.push({ o: osc, det });
+      // e5d
       gain.gain.setValueAtTime(level * 0.12, t);
       if (decay) gain.gain.exponentialRampToValueAtTime(0.0001, t + decay);
-      osc.connect(gain).connect(out);
+      // s5e
+      // osc.connect(gain).connect(out);
+      osc.connect(gain).connect(panner(Math.log2(f / 261.6) * 0.22 + partPan)).connect(out);
+      // e5e
       osc.start(t);
       return osc;
     });
@@ -255,22 +309,42 @@ title: Pipe Organ
     filter.type = "bandpass";
     filter.frequency.value = Math.min(base * 3, 8000);
     filter.Q.value = 3;
-    env.gain.setValueAtTime(0.06, t);
+    // s5f
+    // env.gain.setValueAtTime(0.06, t);
+    env.gain.setValueAtTime((parts.length ? Math.max(...parts.map((p) => chiff[p[0]] ?? 0.05)) : 0.02) * (0.6 + Math.random() * 0.8), t);
+    // e5f
     env.gain.exponentialRampToValueAtTime(0.001, t + 0.09);
     puff.connect(filter).connect(env).connect(out);
     puff.start(t, Math.random() * 0.5);
     puff.stop(t + 0.15);
 
-    return { out, sources };
+    // s5g
+    // return { out, sources };
+    return { out, sources, oscs };
+    // e5g
   };
 
-  const silence = ({ out, sources }) => {
+  // s6
+  const silence = ({ out, sources, note }) => {
     const t = ctx.currentTime;
+    const tau = note < 48 ? 0.15 : note > 84 ? 0.04 : 0.07;
     out.gain.cancelScheduledValues(t);
     out.gain.setValueAtTime(out.gain.value, t);
-    out.gain.setTargetAtTime(0, t, 0.07);
-    sources.forEach((o) => o.stop(t + 0.6));
+    // out.gain.setTargetAtTime(0, t, 0.07);
+    out.gain.setTargetAtTime(0, t, tau);
+    // sources.forEach((o) => o.stop(t + 0.6));
+    sources.forEach((o) => o.stop(t + tau * 8));
   };
+  // e6
+
+  // s7
+  const retune = () => {
+    if (!ctx) return;
+    const sag = -Math.min(5, (voices.size - 1) * 0.6 + (pedal.voice ? 0.4 : 0));
+    const t = ctx.currentTime;
+    [...voices.values(), pedal.voice].forEach((v) => v?.oscs.forEach(({ o, det }) => o.detune.setTargetAtTime(det + sag, t, 0.12)));
+  };
+  // e7
 
   const updatePedal = () => {
     const active = pedalStops.filter((s) => s.on);
@@ -278,8 +352,15 @@ title: Pipe Organ
     if (note === pedal.note) return;
     if (pedal.voice) silence(pedal.voice);
     const f = 440 * 2 ** ((note - 69) / 12);
-    const parts = active.flatMap((s) => s.ratios.map((r) => [s.wave, f * r, s.gain]));
-    pedal = { note, voice: note === null ? null : sound(parts, f) };
+    // s8a
+    // const parts = active.flatMap((s) => s.ratios.map((r) => [s.wave, f * r, s.gain]));
+    const parts = active.flatMap((s) => s.ratios.map((r) => [s.wave, f * r, s.gain, s.cents, s.decay, s.pan]));
+    // e8a
+    // s8b
+    // pedal = { note, voice: note === null ? null : sound(parts, f) };
+    pedal = { note, voice: note === null ? null : { note, ...sound(parts, f) } };
+    retune();
+    // e8b
   };
 
   const noteOn = (m) => {
@@ -290,12 +371,21 @@ title: Pipe Organ
     for (const c of [{ shift: 0, on: true }, ...couplers]) {
       if (!c.on) continue;
       for (const s of stops.filter((s) => s.on)) {
-        for (const r of s.ratios) parts.push([s.wave, f * 2 ** (c.shift / 12) * r, s.gain, s.cents, s.decay]);
+        // s8c
+        // for (const r of s.ratios) parts.push([s.wave, f * 2 ** (c.shift / 12) * r, s.gain, s.cents, s.decay]);
+        for (const r of s.ratios) parts.push([s.wave, f * 2 ** (c.shift / 12) * r, s.gain, s.cents, s.decay, s.pan]);
+        // e8c
       }
     }
-    voices.set(m, sound(parts, f));
+    // s8d
+    // voices.set(m, sound(parts, f));
+    voices.set(m, { note: m, ...sound(parts, f) });
+    // e8d
     light(m, true);
     updatePedal();
+    // s8e
+    retune();
+    // e8e
   };
 
   const noteOff = (m) => {
@@ -305,6 +395,9 @@ title: Pipe Organ
     voices.delete(m);
     light(m, false);
     updatePedal();
+    // s8f
+    retune();
+    // e8f
   };
 
   const allOff = () => [...voices.keys()].forEach(noteOff);
